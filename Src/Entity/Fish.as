@@ -11,7 +11,7 @@ package Src.Entity
   {
     public var physical:CPhysical;
     public var sprite:CSprite;
-    public var anim:Number=0;
+
 
     public function Fish(pos:Point)
     {
@@ -28,23 +28,21 @@ package Src.Entity
     {
       if(game.input.anyKey())
         game.updateStep();
-      anim += 0.03;
-      while(anim > 1)
-        anim--;
-      sprite.frame = anim*4;
+      sprite.frame = game.anim*4;
       if(physical.facingLeft)
         sprite.frame += 4;
+      var camTarget:Point = new Point(physical.pos.x*16+8, physical.pos.y*16+8);
+      game.camera.setTarget(camTarget);
     }
 
     public override function updateStep():void
     {
-        var dir:int = -1;
-        if(game.input.upKey()) dir = 0;
-        if(game.input.rightKey()) dir = 1;
-        if(game.input.downKey()) dir = 2;
-        if(game.input.leftKey()) dir = 3;
-        if(dir!=-1)
-          physical.doMove(dir);
+      var offset:Point = new Point(0,0);
+      if(game.input.upKey()) offset.y--;
+      if(game.input.rightKey()) offset.x++;
+      if(game.input.downKey()) offset.y++;
+      if(game.input.leftKey()) offset.x--;
+      physical.doMove(offset);
     }
   }
 }

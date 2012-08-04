@@ -20,18 +20,10 @@ package Src.Entity
       this.pos = pos.clone();      
     }
 
-    public function doMove(dir:int):void
+    public function doMove(offset:Point):void
     {
-      var offset:Point = new Point(0,0);
-      switch(dir)
-      {
-        case 0: offset.y--; break;
-        case 1: offset.x++; break;
-        case 2: offset.y++; break;
-        case 3: offset.x--; break;
-      }
-      if(dir==1) facingLeft = false;
-      if(dir==3) facingLeft = true;
+      if(offset.x > 0) facingLeft = false;
+      if(offset.x < 0) facingLeft = true;
       var newPoint:Point = new Point(pos.x+offset.x, pos.y+offset.y);
       var tile:Tile = e.game.tileMap.getTile(newPoint.x, newPoint.y);
       if(tile.t != Tile.T_WALL)

@@ -142,13 +142,7 @@ package Src.Tiles
     public function saveToFile(fileName:String):void    
     {
       var byteArray:ByteArray = new ByteArray();
-      byteArray.writeInt(TileMap.magic);
-      byteArray.writeInt(TileMap.version); 
-      byteArray.writeInt(tileMap.width);
-      byteArray.writeInt(tileMap.height);
-      for(var i:int=0; i<tileMap.tiles.length; i++)
-        tileMap.tiles[i].addToByteArray(byteArray);
-      byteArray.compress();
+      tileMap.pack(byteArray);
         
       fileReference = new FileReference()
       fileReference.save(byteArray, fileName);
@@ -170,23 +164,8 @@ package Src.Tiles
 	  private function onFileComplete(event:Event):void
 	  {
       var byteArray:ByteArray = fileReference.data;
-      byteArray.uncompress();
-           
-      if(TileMap.magic != byteArray.readInt())
-      {
-        trace("Not a game level file!");
-        return;
-      }
-      if(TileMap.version != byteArray.readInt())
-      {
-        trace("Wrong level version!");
-        return;
-      }
-      var w:int = byteArray.readInt();
-      var h:int = byteArray.readInt();
-      tileMap.reset(w, h);
-      for(var i:int=0; i<tileMap.tiles.length; i++)
-        tileMap.tiles[i].readFromByteArray(byteArray);
+
+      tileMap.unpack(byteArray);
 	  }    
   }
 }

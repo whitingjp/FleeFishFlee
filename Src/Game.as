@@ -30,7 +30,7 @@ package Src
     private var fpsText:TextField;
 
     private var updateTracker:Number = 0;
-	private var physTime:Number;
+    private var physTime:Number;
 
     private var gameState:int = STATE_GAME;
 
@@ -43,6 +43,11 @@ package Src
     public var frontEnd:Frontend;
     public var camera:Camera;
 
+    public var anim:Number=0;
+
+    [Embed(source="../level/test.lev", mimeType="application/octet-stream")]
+    public static const TestLevelClass: Class;    
+
     public function Game()
     {	  
       entityManager = new EntityManager(this, 8);
@@ -50,6 +55,8 @@ package Src
       renderer = new Renderer();	  
       soundManager = new SoundManager();
       tileMap = new TileMap(this);      
+      var embed:ByteArray = new TestLevelClass as ByteArray;
+      tileMap.unpack(embed); 
       frontEnd = new Frontend(this);
       camera = new Camera(this);
     }
@@ -78,6 +85,11 @@ package Src
 
     private function update():void
     {
+
+      anim += 0.03;
+      while(anim > 1)
+        anim--;
+        
       camera.update();
       renderer.update();
       entityManager.update();

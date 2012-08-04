@@ -13,6 +13,8 @@ package Src.Tiles
   public class TileMap
   {  
     private static const OBJ_FISH:int=0;
+    private static const OBJ_OCTOPUS:int=1;
+    private static const OBJ_STARFISH:int=2;
   
     public static var tileWidth:int=16;
     public static var tileHeight:int=16;
@@ -32,7 +34,7 @@ package Src.Tiles
     
     public function TileMap(game:Game)
     {
-      reset(30,10);
+      reset(15*4,10*4);
       this.game = game;
     }
     
@@ -65,6 +67,12 @@ package Src.Tiles
         {
           case OBJ_FISH:
             game.entityManager.push(new Fish(p));
+            break;
+          case OBJ_OCTOPUS:
+            game.entityManager.push(new Octopus(p));
+            break;
+          case OBJ_STARFISH:
+            game.entityManager.push(new Starfish(p));
             break;
         }
       }
@@ -138,6 +146,38 @@ package Src.Tiles
         case Tile.T_WALL: return CCollider.COL_SOLID;
       }
       return CCollider.COL_NONE;
+    }
+
+    public function pack(byteArray:ByteArray):void
+    {
+      byteArray.writeInt(magic);
+      byteArray.writeInt(version); 
+      byteArray.writeInt(width);
+      byteArray.writeInt(height);
+      for(var i:int=0; i<tiles.length; i++)
+        tiles[i].addToByteArray(byteArray);
+      byteArray.compress();
+    }
+
+    public function unpack(byteArray:ByteArray):void
+    {
+      byteArray.uncompress();
+           
+      if(magic != byteArray.readInt())
+      {
+        trace("Not a game level file!");
+        return;
+      }
+      if(TileMap.version != byteArray.readInt())
+      {
+        trace("Wrong level version!");
+        return;
+      }
+      var w:int = byteArray.readInt();
+      var h:int = byteArray.readInt();
+      reset(w, h);
+      for(var i:int=0; i<tiles.length; i++)
+        tiles[i].readFromByteArray(byteArray);
     }
   }
 }

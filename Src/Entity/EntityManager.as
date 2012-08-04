@@ -53,5 +53,15 @@ package Src.Entity
     {
       return element.alive;
     }
+
+    public function getFish():Fish
+    {
+      for(var i:int=0; i<entities.length; i++)
+      {
+        if(entities[i] is Fish)
+          return entities[i];
+      }
+      return null;
+    }
   }
 }

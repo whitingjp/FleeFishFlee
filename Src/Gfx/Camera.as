@@ -48,10 +48,10 @@ package Src.Gfx
           if(game.input.upKey(false)) target.y -= game.renderer.height;
         } else
         {
-          if(game.input.rightKey()) target.x += 8;
-          if(game.input.leftKey()) target.x -= 8;
-          if(game.input.downKey()) target.y += 8;
-          if(game.input.upKey()) target.y -= 8;
+          if(game.input.rightKey(true)) target.x += 8;
+          if(game.input.leftKey(true)) target.x -= 8;
+          if(game.input.downKey(true)) target.y += 8;
+          if(game.input.upKey(true)) target.y -= 8;
         }
       }
       var tileMapWidth:int = game.tileMap.width*TileMap.tileWidth;
