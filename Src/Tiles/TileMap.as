@@ -99,12 +99,12 @@ package Src.Tiles
       }
     }
     
-    public function getIndex(x:int, y:int):int
+    private function getIndex(x:int, y:int):int
     {
-      while(x < 0) x+=width;
-      while(x >= width) x-=width;
-      while(y < 0) y+=height;
-      while(y >= height) y-=height;
+      while(x < 0) return -1;
+      while(x >= width) return -1;
+      while(y < 0) return -1;
+      while(y >= height) return -1;
       return x+y*width;
     }
     
@@ -117,6 +117,12 @@ package Src.Tiles
     
     public function getTileFromIndex(i:int):Tile
     {
+      if(i==-1)
+      {
+        var fillTile:Tile = new Tile();
+        fillTile.t = Tile.T_WALL;
+        return fillTile;
+      }
       return tiles[i];
     }    
         
@@ -139,6 +145,7 @@ package Src.Tiles
     
     public function setTileByIndex(i:int, tile:Tile):void
     {
+      if(i==-1) return;
       tiles[i] = tile.clone();
     }
     

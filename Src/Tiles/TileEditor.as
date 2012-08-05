@@ -52,12 +52,14 @@ package Src.Tiles
     
     public function getTileGroup(t:Tile):int
     {
-      return int(t.xFrame/4)+int(t.yFrame/4)*16;
+      return int(t.xFrame/6)+int(t.yFrame/4)*16;
     }
     
     public function autoTile(x:int, y:int):void
     {
       var t:Tile = tileMap.getTile(x, y);
+      if(t.t == Tile.T_ENTITY)
+        return;
       var group:int = getTileGroup(t);
       var flags:int = 0;
 
@@ -71,6 +73,7 @@ package Src.Tiles
       checkTile = tileMap.getTile(x-1,y);
       if(checkTile.t == t.t && getTileGroup(checkTile) == group) flags |= 8;
       
+      var allWall:Boolean = false;
       switch(flags)
       {
         case  0: t.xFrame = 3; t.yFrame = 3; break;
@@ -88,8 +91,29 @@ package Src.Tiles
         case 12: t.xFrame = 2; t.yFrame = 0; break;
         case 13: t.xFrame = 2; t.yFrame = 1; break;
         case 14: t.xFrame = 1; t.yFrame = 0; break;
-        case 15: t.xFrame = 1; t.yFrame = 1; break;
-      }      
+        case 15: allWall = true; break;
+      }
+      if(allWall)
+      {
+        // is it center or inner corner?
+        flags = 0;
+        checkTile = tileMap.getTile(x+1,y-1);
+        if(checkTile.t == t.t && getTileGroup(checkTile) == group) flags |= 1;
+        checkTile = tileMap.getTile(x+1,y+1);
+        if(checkTile.t == t.t && getTileGroup(checkTile) == group) flags |= 2;
+        checkTile = tileMap.getTile(x-1,y+1);
+        if(checkTile.t == t.t && getTileGroup(checkTile) == group) flags |= 4;
+        checkTile = tileMap.getTile(x-1,y-1);
+        if(checkTile.t == t.t && getTileGroup(checkTile) == group) flags |= 8;
+        switch(flags)
+        {
+          default: t.xFrame = 1; t.yFrame = 1; break;
+          case 7:  t.xFrame = 4; t.yFrame = 0; break;
+          case 11: t.xFrame = 4; t.yFrame = 1; break;
+          case 13: t.xFrame = 5; t.yFrame = 1; break;
+          case 14: t.xFrame = 5; t.yFrame = 0; break;
+        }
+      }
       t.yFrame += (group/16)*4;
       t.xFrame += (group-int(group/16)*16)*4;
     }

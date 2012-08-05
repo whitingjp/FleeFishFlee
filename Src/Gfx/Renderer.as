@@ -78,9 +78,9 @@ package Src.Gfx
       sprites["starfish"] = new SpriteDef(0,96,16,16,8,1);
       sprites["pufferfish"] = new SpriteDef(0,112,16,16,8,1);
       sprites["gem"] = new SpriteDef(0,128,16,16,8,1);
-      sprites["decoration"] = new SpriteDef(64,0,16,16,1,1);
-      sprites["walls"] = new SpriteDef(0,0,16,16,4,4);
-      sprites["objects"] = new SpriteDef(80,0,16,16,5,1);
+      sprites["decoration"] = new SpriteDef(128,128,16,16,1,1);
+      sprites["walls"] = new SpriteDef(0,0,16,16,6,4);
+      sprites["objects"] = new SpriteDef(96,0,16,16,5,1);
 
       fade = 0;
       fadeSpeed = 0.005;
