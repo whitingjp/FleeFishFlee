@@ -77,7 +77,7 @@ package Src.Gfx
       sprites["octopus"] = new SpriteDef(0,80,16,16,8,1);
       sprites["starfish"] = new SpriteDef(0,96,16,16,8,1);
       sprites["pufferfish"] = new SpriteDef(0,112,16,16,8,1);
-      sprites["gem"] = new SpriteDef(0,128,16,16,8,1);
+      sprites["gem"] = new SpriteDef(0,128,16,16,9,1);
       sprites["sponge"] = new SpriteDef(0,144,16,16,8,1);
       sprites["seaweed"] = new SpriteDef(0,160,16,16,1,1);
       sprites["decoration"] = new SpriteDef(128,128,1,1,1,1);

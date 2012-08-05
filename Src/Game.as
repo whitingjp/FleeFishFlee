@@ -48,8 +48,25 @@ package Src
 
     public var transition:Number=1;
 
-    [Embed(source="../level/test.lev", mimeType="application/octet-stream")]
-    public static const TestLevelClass: Class;    
+    public var currentLevel:int = -1;
+
+    [Embed(source="../level/Fish1.lev", mimeType="application/octet-stream")]
+    public static const Level1Class: Class;
+    [Embed(source="../level/Fish2.lev", mimeType="application/octet-stream")]
+    public static const Level2Class: Class;
+    [Embed(source="../level/Fish3.lev", mimeType="application/octet-stream")]
+    public static const Level3Class: Class;
+    [Embed(source="../level/Fish4.lev", mimeType="application/octet-stream")]
+    public static const Level4Class: Class;
+    [Embed(source="../level/Fish5.lev", mimeType="application/octet-stream")]
+    public static const Level5Class: Class;
+    [Embed(source="../level/Fish6.lev", mimeType="application/octet-stream")]
+    public static const Level6Class: Class;
+    [Embed(source="../level/Fish7.lev", mimeType="application/octet-stream")]
+    public static const Level7Class: Class;
+    [Embed(source="../level/Fish8.lev", mimeType="application/octet-stream")]
+    public static const Level8Class: Class;
+
 
     public function Game()
     {	  
@@ -58,8 +75,7 @@ package Src
       renderer = new Renderer();	  
       soundManager = new SoundManager();
       tileMap = new TileMap(this);      
-      var embed:ByteArray = new TestLevelClass as ByteArray;
-      tileMap.unpack(embed); 
+      nextLevel();
       frontEnd = new Frontend(this);
       camera = new Camera(this);
     }
@@ -174,6 +190,19 @@ package Src
 
     public function nextLevel():void
     {
+      currentLevel++;
+      var embed:ByteArray;
+      switch(currentLevel)
+      {
+        case 0: embed = new Level1Class as ByteArray; break;
+        case 1: embed = new Level2Class as ByteArray; break;
+        case 2: embed = new Level4Class as ByteArray; break;
+        case 3: embed = new Level3Class as ByteArray; break;
+        case 4: embed = new Level8Class as ByteArray; break;
+        case 5: embed = new Level7Class as ByteArray; break;
+        case 6: embed = new Level6Class as ByteArray; break;
+      }      
+      tileMap.unpack(embed); 
       resetEntities();
     }
 
