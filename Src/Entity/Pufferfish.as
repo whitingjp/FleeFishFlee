@@ -31,39 +31,11 @@ package Src.Entity
       if(!up) sprite.frame += 4;
     }
 
-    public function offsetFromDir(d:int):Point
-    {
-      var offset:Point = new Point(0,0);
-      switch(d)
-      {
-        case 0: offset.y--; break;
-        case 1: offset.x++; break;
-        case 2: offset.y++; break;
-        case 3: offset.x--; break;
-      }
-      return offset;
-    }
-
-    public function testDir(d:int):Boolean
-    {
-      var newPoint:Point = physical.pos.clone();
-      var offset:Point = offsetFromDir(d);
-      newPoint.x += offset.x;
-      newPoint.y += offset.y;
-      var tile:Tile = game.tileMap.getTile(newPoint.x, newPoint.y);
-      if(tile.t == Tile.T_WALL)
-        return false;
-      var entity:Entity = game.entityManager.getAtPos(newPoint, this);
-      if(entity)
-        return false;
-      return true;
-    }
-
     public override function updateStep():void
     {
-      if(up && !testDir(0))
+      if(up && !testDir(physical.pos, 0))
         up = !up;
-      if(!up && !testDir(2))
+      if(!up && !testDir(physical.pos, 2))
         up = !up;
       if(up)
         physical.doMove(new Point(0,-1));

@@ -33,51 +33,23 @@ package Src.Entity
       if(clockwise) sprite.frame += 4;
     }
 
-    public function offsetFromDir(d:int):Point
-    {
-      var offset:Point = new Point(0,0);
-      switch(d)
-      {
-        case 0: offset.y--; break;
-        case 1: offset.x++; break;
-        case 2: offset.y++; break;
-        case 3: offset.x--; break;
-      }
-      return offset;
-    }
-
-    public function testDir(d:int):Boolean
-    {
-      var newPoint:Point = physical.pos.clone();
-      var offset:Point = offsetFromDir(d);
-      newPoint.x += offset.x;
-      newPoint.y += offset.y;
-      var tile:Tile = game.tileMap.getTile(newPoint.x, newPoint.y);
-      if(tile.t == Tile.T_WALL)
-        return false;
-      var entity:Entity = game.entityManager.getAtPos(newPoint, this);
-      if(entity)
-        return false;
-      return true;
-    }
-
     public function pickDir():int
     {
-      if(testDir(dir))
+      if(testDir(physical.pos, dir))
       {
         return dir;
       }
-      if(testDir((dir+1)%4))
+      if(testDir(physical.pos, (dir+1)%4))
       {
         clockwise = true;
         return (dir+1)%4;
       }
-      if(testDir((dir+3)%4))
+      if(testDir(physical.pos, (dir+3)%4))
       {
         clockwise = false;
         return (dir+3)%4;
       }
-      if(testDir((dir+2)%4))
+      if(testDir(physical.pos, (dir+2)%4))
       {
         clockwise = false;
         return (dir+2)%4;

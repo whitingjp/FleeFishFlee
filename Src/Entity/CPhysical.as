@@ -30,7 +30,7 @@ package Src.Entity
         return;
 
       var entity:Entity = e.game.entityManager.getAtPos(newPoint, e);
-      if(!entity)
+      if(!entity || entity is Fish)
         pos = newPoint;
 
     }
