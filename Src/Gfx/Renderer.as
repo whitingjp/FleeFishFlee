@@ -24,6 +24,12 @@ package Src.Gfx
     public var bgSrc:BitmapAsset;
     public var bg:BitmapData;
 
+    [Embed(source="../../graphics/FishTitle.png")]
+    [Bindable]
+    public var titleClass:Class;
+    public var titleSrc:BitmapAsset;
+    public var title:BitmapData;
+
     // double buffer
     public var backBuffer:BitmapData;
     public var postBuffer:BitmapData;
@@ -57,6 +63,10 @@ package Src.Gfx
       bgSrc = new bgClass() as BitmapAsset;
       bg = bgSrc.bitmapData;
 
+      titleSrc = new titleClass() as BitmapAsset;
+      title = titleSrc.bitmapData;
+
+
       backBuffer = new BitmapData(width, height, false);
       if(pixelSize != 1)
         postBuffer = new BitmapData(width*pixelSize,
@@ -66,9 +76,11 @@ package Src.Gfx
       sprites["fish"] = new SpriteDef(0,64,16,16,8,1);
       sprites["octopus"] = new SpriteDef(0,80,16,16,8,1);
       sprites["starfish"] = new SpriteDef(0,96,16,16,8,1);
+      sprites["pufferfish"] = new SpriteDef(0,112,16,16,8,1);
+      sprites["gem"] = new SpriteDef(0,128,16,16,8,1);
       sprites["decoration"] = new SpriteDef(64,0,16,16,1,1);
       sprites["walls"] = new SpriteDef(0,0,16,16,4,4);
-      sprites["objects"] = new SpriteDef(80,0,16,16,4,1);
+      sprites["objects"] = new SpriteDef(80,0,16,16,5,1);
 
       fade = 0;
       fadeSpeed = 0.005;
@@ -189,6 +201,11 @@ package Src.Gfx
       var matrix:Matrix = new Matrix();
       matrix.translate(x, y);
       backBuffer.draw(txt, matrix);
+    }
+
+    public function drawTitle():void
+    {
+      backBuffer.copyPixels(title, title.rect, new Point(0,0));
     }
     
     public function setCamera(camera:Camera=null):void

@@ -26,7 +26,11 @@ package Src.Entity
       if(offset.x < 0) facingLeft = true;
       var newPoint:Point = new Point(pos.x+offset.x, pos.y+offset.y);
       var tile:Tile = e.game.tileMap.getTile(newPoint.x, newPoint.y);
-      if(tile.t != Tile.T_WALL)
+      if(tile.t == Tile.T_WALL)
+        return;
+
+      var entity:Entity = e.game.entityManager.getAtPos(newPoint, e);
+      if(!entity)
         pos = newPoint;
 
     }

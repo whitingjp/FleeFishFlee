@@ -7,19 +7,17 @@ package Src.Entity
   import flash.utils.Dictionary;
   import Src.Tiles.*;
 
-  public class Starfish extends Entity
+  public class Pufferfish extends Entity
   {
     public var physical:CPhysical;
     public var sprite:CSprite;
-    public var dir:int;
-    public var clockwise:Boolean;
+    public var up:Boolean;
 
-    public function Starfish(pos:Point)
+    public function Pufferfish(pos:Point)
     {
       physical = new CPhysical(this, pos);
-      sprite = new CSprite(this, "starfish");
-      dir = 0;
-      clockwise = true;
+      sprite = new CSprite(this, "pufferfish");
+      up = true;
     }
 
     public override function render():void
@@ -30,7 +28,7 @@ package Src.Entity
     public override function update():void
     {
       sprite.frame = game.anim*4;
-      if(clockwise) sprite.frame += 4;
+      if(!up) sprite.frame += 4;
     }
 
     public function offsetFromDir(d:int):Point
@@ -61,34 +59,16 @@ package Src.Entity
       return true;
     }
 
-    public function pickDir():int
-    {
-      if(testDir(dir))
-      {
-        return dir;
-      }
-      if(testDir((dir+1)%4))
-      {
-        clockwise = true;
-        return (dir+1)%4;
-      }
-      if(testDir((dir+3)%4))
-      {
-        clockwise = false;
-        return (dir+3)%4;
-      }
-      if(testDir((dir+2)%4))
-      {
-        clockwise = false;
-        return (dir+2)%4;
-      }
-      return -1;
-    }
-
     public override function updateStep():void
     {
-      dir = pickDir();
-      physical.doMove(offsetFromDir(dir));
+      if(up && !testDir(0))
+        up = !up;
+      if(!up && !testDir(2))
+        up = !up;
+      if(up)
+        physical.doMove(new Point(0,-1));
+      else
+        physical.doMove(new Point(0,1))
     }
   }
 }

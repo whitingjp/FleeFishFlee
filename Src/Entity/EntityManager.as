@@ -3,6 +3,7 @@ package Src.Entity
   import mx.core.*;
   import mx.collections.*;
   import Src.*;
+  import flash.geom.*;
 
   public class EntityManager
   {
@@ -32,6 +33,7 @@ package Src.Entity
     {
       var i:int;
       var j:int;
+      entities.sort(orderPriority);
       for(i=0; i<entities.length; i++)
         entities[i].update();
       entities = entities.filter(isAlive);
@@ -62,6 +64,46 @@ package Src.Entity
           return entities[i];
       }
       return null;
+    }
+
+    public function getAtPos(pos:Point, me:Entity):Entity
+    {
+      for(var i:int=0; i<entities.length; i++)
+      {
+        if(entities[i] == me)
+          continue;
+        if(entities[i].hasOwnProperty("physical"))
+        {
+          var physical:CPhysical = entities[i].physical;
+          if((physical.pos.x == pos.x) && (physical.pos.y == pos.y))
+            return entities[i];
+        }
+      }
+      return null;
+    }
+
+    public function orderPriority(a:Entity, b:Entity):int
+    {
+      var aP:int = getPriority(a);
+      var bP:int = getPriority(b);
+      if(aP > bP)
+        return 1;
+      if(aP < bP)
+        return -1;
+      return 0;
+    }
+
+    public function getPriority(e:Entity):int
+    {
+      if(e is Fish)
+        return 0;
+      if(e is Pufferfish)
+        return 1;
+      if(e is Starfish)
+        return 2;
+      if(e is Octopus)
+        return 3;
+      return 999;
     }
   }
 }

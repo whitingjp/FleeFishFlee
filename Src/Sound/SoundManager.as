@@ -8,9 +8,9 @@ package Src.Sound
   public class SoundManager
   {
     public static var SOUND_ENABLED:Boolean = true;
-    public static var MUSIC_ENABLED:Boolean = false;
+    public static var MUSIC_ENABLED:Boolean = true;
 
-    [Embed(source="../../sound/test.mp3")]
+    [Embed(source="../../sound/FleeFishFlee.mp3")]
     [Bindable]
     private var mp3Music:Class;
     private var musicSounds:Object;
@@ -70,7 +70,7 @@ package Src.Sound
 
       stopMusic();
       channel = musicSounds[currentTrack].play();
-      setVol(0.1);
+      setVol(0.6);
       channel.addEventListener(Event.SOUND_COMPLETE, soundCompleteHandler);
     }
 

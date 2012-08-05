@@ -22,6 +22,7 @@ package Src
     public static var STATE_GAME:int = 0;
     public static var STATE_EDITING:int = 1;
     public static var STATE_FE:int = 2;
+    public static var STATE_PRE:int = 3;
     
 	public var stage:Stage;
 
@@ -71,7 +72,7 @@ package Src
 	  input.init();
       tileEditor = new TileEditor(tileMap);
 
-      gameState = STATE_GAME;
+      gameState = STATE_PRE;
       frontEnd.addScreen(new MainMenu());
 
       fpsText = new TextField();
@@ -89,14 +90,21 @@ package Src
       anim += 0.03;
       while(anim > 1)
         anim--;
-        
+
       camera.update();
       renderer.update();
-      entityManager.update();
+      if(gameState != STATE_PRE)
+        entityManager.update();
       if(gameState == STATE_FE)
         frontEnd.update();
       if(gameState == STATE_EDITING)
         tileEditor.update();
+
+      if(gameState == STATE_PRE && (input.anyKey() || input.mousePressed))
+      {
+        changeState(STATE_GAME);
+        resetEntities();
+      }
         
       if(input.keyPressedDictionary[Input.KEY_E])
       {
@@ -128,7 +136,7 @@ package Src
     private function render():void
     {
       renderer.cls();
-	  
+
       renderer.setCamera(camera);
       tileMap.render();
       entityManager.render();
@@ -137,6 +145,8 @@ package Src
         tileEditor.render();      
       if(gameState == STATE_FE)
         frontEnd.render();
+      if(gameState == STATE_PRE)
+        renderer.drawTitle();
 		  /*
       renderer.drawFontText("Jonathan Whiting's Basecode",
                             renderer.width/2, 10, true);

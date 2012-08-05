@@ -15,6 +15,8 @@ package Src.Tiles
     private static const OBJ_FISH:int=0;
     private static const OBJ_OCTOPUS:int=1;
     private static const OBJ_STARFISH:int=2;
+    private static const OBJ_PUFFERFISH:int=3;
+    private static const OBJ_GEM:int=4;
   
     public static var tileWidth:int=16;
     public static var tileHeight:int=16;
@@ -73,6 +75,12 @@ package Src.Tiles
             break;
           case OBJ_STARFISH:
             game.entityManager.push(new Starfish(p));
+            break;
+          case OBJ_PUFFERFISH:
+            game.entityManager.push(new Pufferfish(p));
+            break;
+          case OBJ_GEM:
+            game.entityManager.push(new Gem(p));
             break;
         }
       }
