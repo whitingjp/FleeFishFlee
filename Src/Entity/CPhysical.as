@@ -12,16 +12,19 @@ package Src.Entity
     private var e:Entity;
 
     public var pos:Point;
+    public var oldPos:Point;
     public var facingLeft:Boolean=false;
 
     public function CPhysical(e:Entity, pos:Point)
     {
       this.e = e;
-      this.pos = pos.clone();      
+      this.pos = pos.clone(); 
+      this.oldPos = pos.clone();     
     }
 
     public function doMove(offset:Point):void
     {
+      oldPos = pos.clone();
       if(offset.x > 0) facingLeft = false;
       if(offset.x < 0) facingLeft = true;
       var newPoint:Point = new Point(pos.x+offset.x, pos.y+offset.y);

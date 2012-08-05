@@ -26,5 +26,13 @@ package Src.Entity
       var drawPos:Point = new Point(pos.x*16, pos.y*16);
       e.game.renderer.drawSprite(sprite, drawPos.x, drawPos.y, frame);
     }
+
+    public function smoothRender(apos:Point, bpos:Point):void
+    {
+      var diff:Point = new Point(bpos.x-apos.x, bpos.y-apos.y);
+      var ratio:Number = e.game.transition;
+      var renderPos:Point = new Point(apos.x + diff.x*ratio, apos.y + diff.y*ratio);
+      render(renderPos)
+    }
   }
 }

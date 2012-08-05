@@ -46,6 +46,8 @@ package Src
 
     public var anim:Number=0;
 
+    public var transition:Number=1;
+
     [Embed(source="../level/test.lev", mimeType="application/octet-stream")]
     public static const TestLevelClass: Class;    
 
@@ -91,6 +93,10 @@ package Src
       while(anim > 1)
         anim--;
 
+      transition += 0.2;
+      if(transition > 1)
+        transition = 1;
+
       camera.update();
       renderer.update();
       if(gameState != STATE_PRE)
@@ -123,6 +129,7 @@ package Src
 
     public function updateStep():void
     {
+      transition = 0;
       entityManager.updateStep();  
     }
     

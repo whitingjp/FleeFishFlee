@@ -21,7 +21,7 @@ package Src.Entity
 
     public override function render():void
     {
-      sprite.render(physical.pos)
+      sprite.smoothRender(physical.oldPos, physical.pos);
     }
 
     public function getDir():int
