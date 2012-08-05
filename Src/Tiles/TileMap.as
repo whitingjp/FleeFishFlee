@@ -17,6 +17,8 @@ package Src.Tiles
     private static const OBJ_STARFISH:int=2;
     private static const OBJ_PUFFERFISH:int=3;
     private static const OBJ_GEM:int=4;
+    private static const OBJ_SPONGE:int=5;
+    private static const OBJ_CAMLIMIT:int=6;
   
     public static var tileWidth:int=16;
     public static var tileHeight:int=16;
@@ -29,6 +31,8 @@ package Src.Tiles
     
     public var width:int;
     public var height:int;
+    public var boundWidth:int;
+    public var boundHeight:int;
     public var tiles:Array;
     public var sprites:Array;
     
@@ -56,6 +60,12 @@ package Src.Tiles
 
       getTile(0,3).t = Tile.T_WALL;
     }
+
+    public function unbound():void
+    {
+      boundWidth = width;
+      boundHeight = height;
+    }
     
     public function spawnEntities():void
     {
@@ -81,6 +91,10 @@ package Src.Tiles
             break;
           case OBJ_GEM:
             game.entityManager.push(new Gem(p));
+            break;
+          case OBJ_CAMLIMIT:
+            boundWidth = p.x;
+            boundHeight = p.y;
             break;
         }
       }

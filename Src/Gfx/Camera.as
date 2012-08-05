@@ -54,10 +54,10 @@ package Src.Gfx
           if(game.input.upKey(true)) target.y -= 8;
         }
       }
-      var tileMapWidth:int = game.tileMap.width*TileMap.tileWidth;
+      var tileMapWidth:int = game.tileMap.boundWidth*TileMap.tileWidth;
       tileMapWidth -= game.renderer.width;
       if(target.x > tileMapWidth) target.x = tileMapWidth;
-      var tileMapHeight:int = game.tileMap.height*TileMap.tileHeight;
+      var tileMapHeight:int = game.tileMap.boundHeight*TileMap.tileHeight;
       tileMapHeight -= game.renderer.height;
       if(target.y > tileMapHeight) target.y = tileMapHeight;            
       if(target.x < 0) target.x = 0;
@@ -66,7 +66,7 @@ package Src.Gfx
       floatPos.x = ((floatPos.x*9)+target.x)/10;
       floatPos.y = ((floatPos.y*9)+target.y)/10;
       pos.x = int(floatPos.x+0.45);
-      pos.y = int(floatPos.y+0.45);      
+      pos.y = int(floatPos.y+0.45); 
     }
   }
 }

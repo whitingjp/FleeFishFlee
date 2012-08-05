@@ -136,8 +136,10 @@ package Src
     private function resetEntities():void
     {
       entityManager.reset();      
+      tileMap.unbound();
       if(gameState == STATE_GAME)
         tileMap.spawnEntities();
+
     }
 
     private function render():void
