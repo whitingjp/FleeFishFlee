@@ -26,16 +26,29 @@ package Src.Entity
     public override function update():void
     {
       sprite.frame = game.anim*4;
-    }
-
-    public override function updateStep():void
-    {
       var fish:Fish = game.entityManager.getFish();
       if(fish)
       {
         if(fish.physical.pos.x == pos.x && fish.physical.pos.y == pos.y)
+        {
           alive = false;
+          // am i the last?
+          var count:int=0;
+          var i:int
+          for(i=0; i<game.entityManager.entities.length; i++)
+          {
+            if(game.entityManager.entities[i] is Gem)
+              count++;
+          }
+          if(count==1) // just me
+            game.nextLevel();
+        }
       }
+    }
+
+    public override function updateStep():void
+    {
+
     }
   }
 }

@@ -120,6 +120,12 @@ package Src
           changeState(STATE_GAME);
         resetEntities();
       }
+
+      var fish:Fish = entityManager.getFish();
+      if(fish && fish.deadTimer > 2)
+        resetEntities();
+      if(gameState == STATE_GAME && input.keyPressedDictionary[Input.KEY_R])
+        resetEntities();
         
       // Update input last, so mouse presses etc. will register first..
       // also note this mode of operation isn't perfect, sometimes input
@@ -164,6 +170,11 @@ package Src
         renderer.backBuffer.draw(fpsText);
 	   */
       renderer.flip();
+    }
+
+    public function nextLevel():void
+    {
+      resetEntities();
     }
 
     public function enterFrame(event:Event):void
