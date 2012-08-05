@@ -43,8 +43,32 @@ package Src.Entity
 
     public function updateStep():void
     {
-      for(var i:int=0; i<entities.length; i++)
-        entities[i].updateStep();
+      var i:int;
+      var fish:Fish = getFish();
+
+      var justPlayer:Boolean = false;
+      // look for seaweed
+      for(i=0; i<entities.length; i++)
+        if(entities[i] is Seaweed)
+          if(entities[i].pos.x == fish.physical.pos.x && entities[i].pos.y == fish.physical.pos.y)
+            justPlayer = true;
+
+      if(justPlayer)
+      {
+        fish.updateStep();
+        for(i=0; i<entities.length; i++)
+        {
+          if(entities[i] == fish)
+            continue
+          if(entities[i].hasOwnProperty("physical"))
+            entities[i].physical.oldPos = entities[i].physical.pos;
+        }
+      }
+      else
+      {
+        for(i=0; i<entities.length; i++)
+         entities[i].updateStep();
+      }
     }
 
     public function render():void

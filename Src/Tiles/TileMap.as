@@ -19,6 +19,7 @@ package Src.Tiles
     private static const OBJ_GEM:int=4;
     private static const OBJ_SPONGE:int=5;
     private static const OBJ_CAMLIMIT:int=6;
+    private static const OBJ_SEAWEED:int=7;
   
     public static var tileWidth:int=16;
     public static var tileHeight:int=16;
@@ -96,6 +97,9 @@ package Src.Tiles
           case OBJ_CAMLIMIT:
             boundWidth = p.x;
             boundHeight = p.y;
+            break;
+          case OBJ_SEAWEED:
+            game.entityManager.push(new Seaweed(p));
             break;
         }
       }
