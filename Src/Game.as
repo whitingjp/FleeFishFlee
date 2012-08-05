@@ -128,7 +128,7 @@ package Src
         resetEntities();
       }
         
-      if(input.keyPressedDictionary[Input.KEY_E])
+      if(!IS_FINAL && input.keyPressedDictionary[Input.KEY_E])
       {
         if(gameState == STATE_GAME)
           changeState(STATE_EDITING);
@@ -136,6 +136,9 @@ package Src
           changeState(STATE_GAME);
         resetEntities();
       }
+
+      if(!IS_FINAL && input.keyPressedDictionary[Input.KEY_U])
+        nextLevel();
 
       var fish:Fish = entityManager.getFish();
       if(fish && fish.deadTimer > 2)

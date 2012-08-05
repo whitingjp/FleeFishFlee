@@ -36,10 +36,11 @@ package Src.Entity
         physical.doMove(new Point(0,-1));
       else
       {
+
         var offset:Point = new Point(0,1);
-        if(fish.physical.pos.x < physical.pos.x)
+        if(fish.physical.pos.x < physical.pos.x && testDir(physical.pos, 2))
           offset.x = -1;
-        if(fish.physical.pos.x > physical.pos.x)
+        if(fish.physical.pos.x > physical.pos.x && testDir(physical.pos, 2))
           offset.x = 1;
         physical.doMove(offset);
       }
