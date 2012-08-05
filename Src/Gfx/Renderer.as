@@ -30,6 +30,13 @@ package Src.Gfx
     public var titleSrc:BitmapAsset;
     public var title:BitmapData;
 
+
+    [Embed(source="../../graphics/FishEnd.png")]
+    [Bindable]
+    public var endClass:Class;
+    public var endSrc:BitmapAsset;
+    public var end:BitmapData;
+
     // double buffer
     public var backBuffer:BitmapData;
     public var postBuffer:BitmapData;
@@ -66,6 +73,8 @@ package Src.Gfx
       titleSrc = new titleClass() as BitmapAsset;
       title = titleSrc.bitmapData;
 
+      endSrc = new endClass() as BitmapAsset;
+      end = endSrc.bitmapData;
 
       backBuffer = new BitmapData(width, height, false);
       if(pixelSize != 1)
@@ -208,6 +217,11 @@ package Src.Gfx
     public function drawTitle():void
     {
       backBuffer.copyPixels(title, title.rect, new Point(0,0));
+    }
+
+    public function drawEnd():void
+    {
+      backBuffer.copyPixels(end, end.rect, new Point(0,0));
     }
     
     public function setCamera(camera:Camera=null):void

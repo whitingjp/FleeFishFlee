@@ -23,6 +23,7 @@ package Src
     public static var STATE_EDITING:int = 1;
     public static var STATE_FE:int = 2;
     public static var STATE_PRE:int = 3;
+    public static var STATE_POST:int = 4;
     
 	public var stage:Stage;
 
@@ -115,7 +116,7 @@ package Src
 
       camera.update();
       renderer.update();
-      if(gameState != STATE_PRE)
+      if(gameState != STATE_PRE && gameState != STATE_POST)
         entityManager.update();
       if(gameState == STATE_FE)
         frontEnd.update();
@@ -181,6 +182,8 @@ package Src
         frontEnd.render();
       if(gameState == STATE_PRE)
         renderer.drawTitle();
+      if(gameState == STATE_POST)
+        renderer.drawEnd();
 		  /*
       renderer.drawFontText("Jonathan Whiting's Basecode",
                             renderer.width/2, 10, true);
@@ -204,6 +207,7 @@ package Src
         case 4: embed = new Level8Class as ByteArray; break;
         case 5: embed = new Level7Class as ByteArray; break;
         case 6: embed = new Level6Class as ByteArray; break;
+        default: changeState(STATE_POST); return;
       }      
       tileMap.unpack(embed); 
       resetEntities();
