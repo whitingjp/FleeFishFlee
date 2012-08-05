@@ -43,6 +43,8 @@ package Src.Entity
 
     public function updateStep():void
     {
+      game.soundManager.playSound("move");
+
       var i:int;
       var fish:Fish = getFish();
 
@@ -76,8 +78,12 @@ package Src.Entity
           continue;
         if(entities[i].hasOwnProperty("physical"))
         {
-          if(entities[i].physical.pos.x == fish.physical.pos.x && entities[i].physical.pos.y == fish.physical.pos.y)
+          if(entities[i].physical.pos.x == fish.physical.pos.x && entities[i].physical.pos.y == fish.physical.pos.y && fish.deadTimer == 0)
+          {
             fish.deadTimer = 0.01;
+            game.soundManager.playSound("death");
+
+          }
         }
       }
 

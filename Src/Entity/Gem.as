@@ -31,7 +31,10 @@ package Src.Entity
       if(fish)
       {
         if(fish.physical.pos.x == pos.x && fish.physical.pos.y == pos.y && deadTimer == 0)
+        {
           deadTimer = 0.001;
+          game.soundManager.playSound("diamond");
+        }
       }
 
       if(deadTimer > 0)
