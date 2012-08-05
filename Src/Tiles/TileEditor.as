@@ -108,8 +108,12 @@ package Src.Tiles
         switch(flags)
         {
           default: t.xFrame = 1; t.yFrame = 1; break;
+          case 3:  t.xFrame = 5; t.yFrame = 3; break;
+          case 6:  t.xFrame = 4; t.yFrame = 2; break;
           case 7:  t.xFrame = 4; t.yFrame = 0; break;
+          case 9:  t.xFrame = 4; t.yFrame = 3; break;
           case 11: t.xFrame = 4; t.yFrame = 1; break;
+          case 12: t.xFrame = 5; t.yFrame = 2; break;
           case 13: t.xFrame = 5; t.yFrame = 1; break;
           case 14: t.xFrame = 5; t.yFrame = 0; break;
         }
