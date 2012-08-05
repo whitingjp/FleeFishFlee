@@ -11,7 +11,7 @@ package Src.Entity
   {
     public var physical:CPhysical;
     public var sprite:CSprite;
-
+    public var deadTimer:Number=0;
 
     public function Fish(pos:Point)
     {
@@ -20,8 +20,9 @@ package Src.Entity
     }
 
     public override function render():void
-    {
-      sprite.smoothRender(physical.oldPos, physical.pos);
+    {      
+      if(deadTimer < 1)
+        sprite.smoothRender(physical.oldPos, physical.pos);
     }
 
     public function getDir():int
@@ -41,9 +42,17 @@ package Src.Entity
         if(dir != -1 && testDir(physical.pos, dir))
           game.updateStep();
       }
-      sprite.frame = game.anim*4;
-      if(physical.facingLeft)
-        sprite.frame += 4;
+      if(deadTimer > 0)
+      {
+        deadTimer+=0.05;
+        sprite.frame = 8+deadTimer*8;
+      }
+      else
+      {
+        sprite.frame = game.anim*4;
+        if(physical.facingLeft)
+          sprite.frame += 4;
+      }
       var camTarget:Point = new Point(physical.pos.x*16+8, physical.pos.y*16+8);
       game.camera.setTarget(camTarget);
     }

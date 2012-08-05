@@ -69,6 +69,18 @@ package Src.Entity
         for(i=0; i<entities.length; i++)
          entities[i].updateStep();
       }
+
+      for(i=0; i<entities.length; i++)
+      {
+        if(entities[i]==fish)
+          continue;
+        if(entities[i].hasOwnProperty("physical"))
+        {
+          if(entities[i].physical.pos.x == fish.physical.pos.x && entities[i].physical.pos.y == fish.physical.pos.y)
+            fish.deadTimer = 0.01;
+        }
+      }
+
     }
 
     public function render():void

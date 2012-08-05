@@ -73,7 +73,7 @@ package Src.Gfx
                                     height*pixelSize, false);
 
       sprites = new Object();
-      sprites["fish"] = new SpriteDef(0,64,16,16,8,1);
+      sprites["fish"] = new SpriteDef(0,64,16,16,16,1);
       sprites["octopus"] = new SpriteDef(0,80,16,16,8,1);
       sprites["starfish"] = new SpriteDef(0,96,16,16,8,1);
       sprites["pufferfish"] = new SpriteDef(0,112,16,16,8,1);
