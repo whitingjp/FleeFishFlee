@@ -57,8 +57,6 @@ package Src.Tiles
       tiles = new Array();
       for(var i:int=0; i<width*height; i++)
           tiles.push(new Tile());
-
-      getTile(0,3).t = Tile.T_WALL;
     }
 
     public function unbound():void
@@ -91,6 +89,9 @@ package Src.Tiles
             break;
           case OBJ_GEM:
             game.entityManager.push(new Gem(p));
+            break;
+          case OBJ_SPONGE:
+            game.entityManager.push(new Sponge(p));
             break;
           case OBJ_CAMLIMIT:
             boundWidth = p.x;

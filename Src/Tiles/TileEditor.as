@@ -155,7 +155,9 @@ package Src.Tiles
       if(game.input.keyPressedDictionary[Input.KEY_C])
         saveToFile("level.lev");
       if(game.input.keyPressedDictionary[Input.KEY_L])
-        loadFromFile();      
+        loadFromFile();
+      if(game.input.keyPressedDictionary[Input.KEY_N] && game.input.keyDownDictionary[Input.KEY_SHIFT])
+        tileMap.reset(15*4,10*4);
     }
     
     public function render():void
