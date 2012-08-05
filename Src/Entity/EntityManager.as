@@ -99,12 +99,14 @@ package Src.Entity
     {
       if(e is Fish)
         return 0;
-      if(e is Pufferfish)
+      if(e is Sponge)
         return 1;
-      if(e is Starfish)
+      if(e is Pufferfish)
         return 2;
-      if(e is Octopus)
+      if(e is Starfish)
         return 3;
+      if(e is Octopus)
+        return 4;
       return 999;
     }
   }
