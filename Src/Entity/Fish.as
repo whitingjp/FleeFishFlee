@@ -24,10 +24,23 @@ package Src.Entity
       sprite.render(physical.pos)
     }
 
+    public function getDir():int
+    {
+      if(game.input.upKey()) return 0;
+      if(game.input.rightKey()) return 1;
+      if(game.input.downKey()) return 2;
+      if(game.input.leftKey()) return 3;
+      return -1;
+    }
+
     public override function update():void
     {
       if(game.input.anyKey())
-        game.updateStep();
+      {
+        var dir:int = getDir();
+        if(dir != -1 && testDir(physical.pos, dir))
+          game.updateStep();
+      }
       sprite.frame = game.anim*4;
       if(physical.facingLeft)
         sprite.frame += 4;
@@ -37,12 +50,9 @@ package Src.Entity
 
     public override function updateStep():void
     {
-      var offset:Point = new Point(0,0);
-      if(game.input.upKey()) offset.y--;
-      if(game.input.rightKey()) offset.x++;
-      if(game.input.downKey()) offset.y++;
-      if(game.input.leftKey()) offset.x--;
-      physical.doMove(offset);
+      var dir:int = getDir();
+      if(dir != -1)
+        physical.doMove(offsetFromDir(dir));
     }
   }
 }
