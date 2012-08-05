@@ -7,7 +7,7 @@ package Src.Entity
 
   public class EntityManager
   {
-    private var entities:Array;
+    public var entities:Array;
     private var subMoves:int;
     public var game:Game;
 
@@ -34,6 +34,8 @@ package Src.Entity
       var i:int;
       var j:int;
       entities.sort(orderPriority);
+      for(i=0; i<entities.length; i++)
+        entities[i].i = i;
       for(i=0; i<entities.length; i++)
         entities[i].update();
       entities = entities.filter(isAlive);

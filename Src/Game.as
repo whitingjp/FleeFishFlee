@@ -93,7 +93,7 @@ package Src
       while(anim > 1)
         anim--;
 
-      transition += 0.2;
+      transition += 0.075;
       if(transition > 1)
         transition = 1;
 

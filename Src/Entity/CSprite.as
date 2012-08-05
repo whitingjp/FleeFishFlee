@@ -30,7 +30,10 @@ package Src.Entity
     public function smoothRender(apos:Point, bpos:Point):void
     {
       var diff:Point = new Point(bpos.x-apos.x, bpos.y-apos.y);
-      var ratio:Number = e.game.transition;
+      var ratioOffset:Number = (Number(e.i)/e.game.entityManager.entities.length);
+      var ratio:Number = e.game.transition*2 - ratioOffset;
+      if(ratio < 0) ratio = 0;
+      if(ratio > 1) ratio = 1;
       var renderPos:Point = new Point(apos.x + diff.x*ratio, apos.y + diff.y*ratio);
       render(renderPos)
     }

@@ -10,10 +10,12 @@ package Src.Entity
   {
     public var alive:Boolean;
     private var manager:EntityManager;
+    public var i:int;
 
     public function Entity()
     {
       alive = true;
+      i = -1;
     }
 
     public function setManager(manager:EntityManager):void
