@@ -29,7 +29,7 @@ package Src.Sound
     {
       var synth:SfxrSynth = new SfxrSynth();
       synth.setSettingsString(settings);
-      synth.cacheMutations(5);
+      synth.cacheSound();
       sounds[name] = synth;
     }
 
@@ -55,7 +55,7 @@ package Src.Sound
         return;
       }      
 
-      sounds[sound].playCachedMutation();
+      sounds[sound].playCached();
     }
 
     public function playMusic(track:String):void
