@@ -14,10 +14,12 @@ package Src.Tiles
   {
     private var tileMap:TileMap;
     private var pallete:TileMap;
+    private var index:int;
     private var selected:Tile;
     private var inPallete:Boolean = false;
     private var game:Game;
     private var fileReference:FileReference;
+    private var autotiling:Boolean = true;
     
     public function TileEditor(tileMap:TileMap)
     {
@@ -121,10 +123,9 @@ package Src.Tiles
       t.yFrame += (group/16)*4;
       t.xFrame += (group-int(group/16)*16)*4;
     }
-    
-    public function update():void
+
+    public function getOffsetMouse():Point
     {
-      inPallete = game.input.keyDownDictionary[Input.KEY_SPACE];
       var offset:Point = game.camera.pos;
       var mousePos:Point = game.input.mousePos.clone();
       if(!inPallete)
@@ -132,24 +133,39 @@ package Src.Tiles
         mousePos.x += offset.x;
         mousePos.y += offset.y;      
       }
-      var i:int = tileMap.getIndexFromPos(mousePos);
+      return mousePos;
+    }
+
+    public function update():void
+    {
+      inPallete = game.input.keyDownDictionary[Input.KEY_SPACE];
+
+      var mousePos:Point = getOffsetMouse();
+      index = tileMap.getIndexFromPos(mousePos);
       if(game.input.mouseHeld && !inPallete)
       {        
-        tileMap.setTileByIndex(i, selected);
+        tileMap.setTileByIndex(index, selected);
       }
-      if(game.input.keyDownDictionary[Input.KEY_CONTROL])
+      if(game.input.keyDownDictionary[Input.KEY_CONTROL] || inPallete)
       {
         if(inPallete) selected = pallete.getTileAtPos(mousePos);
         else selected = tileMap.getTileAtPos(mousePos);
       }
-      if(game.input.keyDownDictionary[Input.KEY_SHIFT] && !inPallete)
+      if(game.input.keyPressedDictionary[Input.KEY_SHIFT])
+        autotiling = !autotiling;
+      if(autotiling && !inPallete)
       {
-        var p:Point = tileMap.getXY(i);
+        var p:Point = tileMap.getXY(index);
         autoTile(p.x, p.y);
         autoTile(p.x, p.y-1);
         autoTile(p.x+1, p.y);
         autoTile(p.x, p.y+1);
-        autoTile(p.x-1, p.y);        
+        autoTile(p.x-1, p.y);
+        // corners
+        autoTile(p.x+1, p.y-1);
+        autoTile(p.x+1, p.y+1);
+        autoTile(p.x-1, p.y+1);
+        autoTile(p.x-1, p.y-1);
       }
       
       if(game.input.keyPressedDictionary[Input.KEY_C])
@@ -159,14 +175,31 @@ package Src.Tiles
       if(game.input.keyPressedDictionary[Input.KEY_N] && game.input.keyDownDictionary[Input.KEY_SHIFT])
         tileMap.reset(15*4,10*4);
     }
+
+    public function renderWithCam():void
+    {
+      var xy:Point = tileMap.getXY(index);
+      var rect:Rectangle = new Rectangle(
+        xy.x*TileMap.tileWidth, xy.y*TileMap.tileHeight,
+        TileMap.tileWidth, TileMap.tileHeight);
+      game.renderer.drawHollowRect(rect, 0xfff847);
+    }
     
-    public function render():void
+    public function renderWithoutCam():void
     {
       if(inPallete)
       {
         game.renderer.cls();
         pallete.render();
       }
+
+      var spr:String = tileMap.sprites[selected.t];
+      game.renderer.drawSprite(spr, 0, game.renderer.height-TileMap.tileHeight,
+                               selected.xFrame, selected.yFrame);
+      var rect:Rectangle = new Rectangle(
+        0, game.renderer.height-TileMap.tileHeight,
+        TileMap.tileWidth, TileMap.tileHeight);
+      game.renderer.drawHollowRect(rect, 0xf09bf7);
     }
     
     public function saveToFile(fileName:String):void    
