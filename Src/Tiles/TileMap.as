@@ -28,7 +28,7 @@ package Src.Tiles
     private static var objSpr:String="objects";    
     
     public static const magic:int=0xface;
-    public static const version:int=1;    
+    public static const version:int=2;    
     
     public var width:int;
     public var height:int;
@@ -73,34 +73,41 @@ package Src.Tiles
         var y:int = i/width;
         var x:int = i-(y*width);
         var p:Point = new Point(x, y);
-        if(tiles[i].t == Tile.T_ENTITY)
+        if(tiles[i].t != Tile.T_ENTITY)
+          continue;
+        var entity:Entity = null;
         switch(tiles[i].xFrame)
         {
           case OBJ_FISH:
-            game.entityManager.push(new Fish(p));
+            entity = new Fish(p);
             break;
           case OBJ_OCTOPUS:
-            game.entityManager.push(new Octopus(p));
+            entity = new Octopus(p);
             break;
           case OBJ_STARFISH:
-            game.entityManager.push(new Starfish(p));
+            entity = new Starfish(p, tiles[i].dir);
             break;
           case OBJ_PUFFERFISH:
-            game.entityManager.push(new Pufferfish(p));
+            entity = new Pufferfish(p);
             break;
           case OBJ_GEM:
-            game.entityManager.push(new Gem(p));
+            entity = new Gem(p);
             break;
           case OBJ_SPONGE:
-            game.entityManager.push(new Sponge(p));
+            entity = new Sponge(p);
             break;
           case OBJ_CAMLIMIT:
             boundWidth = p.x;
             boundHeight = p.y;
             break;
           case OBJ_SEAWEED:
-            game.entityManager.push(new Seaweed(p));
+            entity = new Seaweed(p);
             break;
+        }
+        if(entity)
+        {
+          entity.precedence_mod = tiles[i].precedence;
+          game.entityManager.push(entity);
         }
       }
     }
@@ -114,7 +121,19 @@ package Src.Tiles
         var tile:Tile = getTile(x,y);
         var spr:String = sprites[tile.t];
         if(game.getState() == Game.STATE_EDITING || tiles[i].t != Tile.T_ENTITY)
+        {
           game.renderer.drawSprite(spr, x*tileWidth, y*tileHeight, tile.xFrame, tile.yFrame);
+          if(tiles[i].t == Tile.T_ENTITY && tiles[i].xFrame == OBJ_STARFISH)
+            game.renderer.drawSprite("arrow", x*tileWidth, y*tileHeight, tiles[i].dir, 0);
+          if(tiles[i].t == Tile.T_ENTITY)
+          {
+            for(var j:int=0; j<tiles[i].precedence; j++)
+            {
+              var rect:Rectangle = new Rectangle(x*tileWidth+j*2+1, y*tileHeight+1, 1, 2);
+              game.renderer.drawRect(rect, 0x000000);
+            }
+          }
+        }
       }
     }
     
@@ -189,7 +208,7 @@ package Src.Tiles
       byteArray.writeInt(width);
       byteArray.writeInt(height);
       for(var i:int=0; i<tiles.length; i++)
-        tiles[i].addToByteArray(byteArray);
+        tiles[i].addToByteArray(byteArray, TileMap.version);
       byteArray.compress();
     }
 
@@ -202,16 +221,19 @@ package Src.Tiles
         trace("Not a game level file!");
         return;
       }
-      if(TileMap.version != byteArray.readInt())
+      var version:int = byteArray.readInt();
+      var tileVersion:int;
+      switch(version)
       {
-        trace("Wrong level version!");
-        return;
+        case 1: tileVersion = Tile.V_INIT; break;
+        case 2: tileVersion = Tile.V_DIRANDPRECEDENCE; break;
+        default: trace('invalid level version!'); return;
       }
       var w:int = byteArray.readInt();
       var h:int = byteArray.readInt();
       reset(w, h);
       for(var i:int=0; i<tiles.length; i++)
-        tiles[i].readFromByteArray(byteArray);
+        tiles[i].readFromByteArray(byteArray, tileVersion);
     }
   }
 }

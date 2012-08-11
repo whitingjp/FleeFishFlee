@@ -11,11 +11,13 @@ package Src.Entity
     public var alive:Boolean;
     private var manager:EntityManager;
     public var i:int;
+    public var precedence_mod:int;
 
     public function Entity()
     {
       alive = true;
       i = -1;
+      precedence_mod = 0;
     }
 
     public function setManager(manager:EntityManager):void

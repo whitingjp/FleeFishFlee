@@ -82,7 +82,6 @@ package Src.Entity
           {
             fish.deadTimer = 0.01;
             game.soundManager.playSound("death");
-
           }
         }
       }
@@ -133,6 +132,10 @@ package Src.Entity
       if(aP > bP)
         return 1;
       if(aP < bP)
+        return -1;
+      if(a.precedence_mod > b.precedence_mod)
+        return 1;
+      if(a.precedence_mod < b.precedence_mod)
         return -1;
       return 0;
     }

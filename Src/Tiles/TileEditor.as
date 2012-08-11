@@ -174,6 +174,15 @@ package Src.Tiles
         loadFromFile();
       if(game.input.keyPressedDictionary[Input.KEY_N] && game.input.keyDownDictionary[Input.KEY_SHIFT])
         tileMap.reset(15*4,10*4);
+
+      var tileAtPos:Tile = tileMap.getTileAtPos(mousePos);
+      if(game.input.keyPressedDictionary[Input.KEY_Q] && !inPallete)
+        tileAtPos.dir = (tileAtPos.dir+1)%4;
+
+      for(var i:int=0; i<9; i++)
+        if(game.input.keyPressedDictionary[Input.KEY_1+i])
+          tileAtPos.precedence = i;
+
     }
 
     public function renderWithCam():void

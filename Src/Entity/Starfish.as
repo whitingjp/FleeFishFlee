@@ -14,11 +14,11 @@ package Src.Entity
     public var dir:int;
     public var clockwise:Boolean;
 
-    public function Starfish(pos:Point)
+    public function Starfish(pos:Point, dir:int)
     {
       physical = new CPhysical(this, pos);
       sprite = new CSprite(this, "starfish");
-      dir = 0;
+      this.dir = dir;
       clockwise = true;
     }
 

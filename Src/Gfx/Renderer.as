@@ -92,6 +92,7 @@ package Src.Gfx
       sprites["decoration"] = new SpriteDef(128,128,1,1,1,1);
       sprites["walls"] = new SpriteDef(0,0,16,16,6,4);
       sprites["objects"] = new SpriteDef(96,0,16,16,8,1);
+      sprites["arrow"] = new SpriteDef(96,16,16,16,4,1);
 
       fade = 0;
       fadeSpeed = 0.005;
@@ -121,7 +122,8 @@ package Src.Gfx
         y -= camera.pos.y;
       }
       var spr:SpriteDef = getSpriteDef(sprite);
-      if(!spr) return;
+      if(!spr)
+        return;
       backBuffer.copyPixels(spriteSheet, spr.getRect(xFrame, yFrame), new Point(x,y));
     }
     
