@@ -10,6 +10,7 @@ package Src.Tiles
 
     public static const V_INIT:int=0;
     public static const V_DIRANDPRECEDENCE:int=1;
+    public static const V_TWOCAMDIRS:int=2;
     
     public var t:int;
     public var xFrame:int;
@@ -56,8 +57,16 @@ package Src.Tiles
       yFrame = byteArray.readInt();
       if(version >= V_DIRANDPRECEDENCE)
       {
-        byteArray.writeInt(dir);
-        byteArray.writeInt(precedence);
+        dir = byteArray.readInt();
+        precedence = byteArray.readInt();
+      }
+      if(version < V_TWOCAMDIRS && t == T_ENTITY)
+      {
+        switch(xFrame)
+        {
+          case 6: xFrame = 8; break; // OBJ_CAMLIMITBOTTOMRIGHT moved from 6-8
+          case 7: xFrame = 6; break; // OBJ_SEAWEED moved from 7-6
+        }
       }
     }
   }

@@ -54,14 +54,13 @@ package Src.Gfx
           if(game.input.upKey(true)) target.y -= 8;
         }
       }
-      var tileMapWidth:int = game.tileMap.boundWidth*TileMap.tileWidth;
-      tileMapWidth -= game.renderer.width;
-      if(target.x > tileMapWidth) target.x = tileMapWidth;
-      var tileMapHeight:int = game.tileMap.boundHeight*TileMap.tileHeight;
-      tileMapHeight -= game.renderer.height;
-      if(target.y > tileMapHeight) target.y = tileMapHeight;            
-      if(target.x < 0) target.x = 0;
-      if(target.y < 0) target.y = 0;
+      var cameraBound:Rectangle = game.tileMap.cameraBound.clone();
+      cameraBound.width -= game.renderer.width;
+      cameraBound.height -= game.renderer.height;
+      if(target.x > cameraBound.right) target.x = cameraBound.right;
+      if(target.y > cameraBound.bottom) target.y = cameraBound.bottom;         
+      if(target.x < cameraBound.left) target.x = cameraBound.left;
+      if(target.y < cameraBound.top) target.y = cameraBound.top;
      
       floatPos.x = ((floatPos.x*9)+target.x)/10;
       floatPos.y = ((floatPos.y*9)+target.y)/10;

@@ -18,8 +18,9 @@ package Src.Tiles
     private static const OBJ_PUFFERFISH:int=3;
     private static const OBJ_GEM:int=4;
     private static const OBJ_SPONGE:int=5;
-    private static const OBJ_CAMLIMIT:int=6;
-    private static const OBJ_SEAWEED:int=7;
+    private static const OBJ_SEAWEED:int=6;
+    private static const OBJ_CAMLIMITTOPLEFT:int=7;
+    private static const OBJ_CAMLIMITBOTTOMRIGHT:int=8;
   
     public static var tileWidth:int=16;
     public static var tileHeight:int=16;
@@ -28,12 +29,11 @@ package Src.Tiles
     private static var objSpr:String="objects";    
     
     public static const magic:int=0xface;
-    public static const version:int=2;    
+    public static const version:int=3;    
     
     public var width:int;
     public var height:int;
-    public var boundWidth:int;
-    public var boundHeight:int;
+    public var cameraBound:Rectangle;
     public var tiles:Array;
     public var sprites:Array;
     
@@ -62,8 +62,7 @@ package Src.Tiles
 
     public function unbound():void
     {
-      boundWidth = width;
-      boundHeight = height;
+      cameraBound = new Rectangle(0, 0, width*tileWidth, height*tileHeight);
     }
     
     public function spawnEntities():void
@@ -96,9 +95,13 @@ package Src.Tiles
           case OBJ_SPONGE:
             entity = new Sponge(p);
             break;
-          case OBJ_CAMLIMIT:
-            boundWidth = p.x;
-            boundHeight = p.y;
+          case OBJ_CAMLIMITTOPLEFT:
+            cameraBound.left = p.x*tileWidth;
+            cameraBound.top = p.y*tileHeight;
+            break;
+          case OBJ_CAMLIMITBOTTOMRIGHT:
+            cameraBound.right = p.x*tileWidth;
+            cameraBound.bottom = p.y*tileHeight;
             break;
           case OBJ_SEAWEED:
             entity = new Seaweed(p);
@@ -227,6 +230,7 @@ package Src.Tiles
       {
         case 1: tileVersion = Tile.V_INIT; break;
         case 2: tileVersion = Tile.V_DIRANDPRECEDENCE; break;
+        case 3: tileVersion = Tile.V_TWOCAMDIRS; break;
         default: trace('invalid level version!'); return;
       }
       var w:int = byteArray.readInt();
