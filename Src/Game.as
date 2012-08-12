@@ -69,6 +69,8 @@ package Src
     public static const Level8Class: Class;
     [Embed(source="../level/starfishvsoctopus.lev", mimeType="application/octet-stream")]
     public static const Level9Class: Class;
+    [Embed(source="../level/chaos_theory.lev", mimeType="application/octet-stream")]
+    public static const Level10Class: Class;
 
 
     public function Game()
@@ -214,6 +216,7 @@ package Src
         case 6: embed = new Level7Class as ByteArray; break;
         case 7: embed = new Level8Class as ByteArray; break;
         case 8: embed = new Level9Class as ByteArray; break;
+        case 9: embed = new Level10Class as ByteArray; break;
         default: changeState(STATE_POST); return;
       }      
       tileMap.unpack(embed); 
