@@ -96,8 +96,8 @@ package Src.Tiles
             entity = new Sponge(p);
             break;
           case OBJ_CAMLIMITTOPLEFT:
-            cameraBound.left = p.x*tileWidth;
-            cameraBound.top = p.y*tileHeight;
+            cameraBound.left = (p.x+1)*tileWidth;
+            cameraBound.top = (p.y+1)*tileHeight;
             break;
           case OBJ_CAMLIMITBOTTOMRIGHT:
             cameraBound.right = p.x*tileWidth;
