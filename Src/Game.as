@@ -76,19 +76,18 @@ package Src
       renderer = new Renderer();	  
       soundManager = new SoundManager();
       tileMap = new TileMap(this);      
-      nextLevel();
       frontEnd = new Frontend(this);
       camera = new Camera(this);
     }
 
     public function init(w:int, h:int, pixelSize:int, targetFps:int, stage:Stage):void
     {
-	  this.stage = stage;	  
-	  
-	  physTime = 1000.0/targetFps;
+      this.stage = stage;	  
+        
+      physTime = 1000.0/targetFps;
       renderer.init(w, h, pixelSize);
       soundManager.init();
-	  input.init();
+      input.init();
       tileEditor = new TileEditor(tileMap);
 
       gameState = STATE_PRE;
@@ -99,8 +98,9 @@ package Src
       fpsText.text = "352 fps";
 
       resetEntities();
-	  
-	  stage.addEventListener(Event.ENTER_FRAME, enterFrame);
+      nextLevel();
+      
+      stage.addEventListener(Event.ENTER_FRAME, enterFrame);
     }
 
     private function update():void
@@ -156,7 +156,7 @@ package Src
     public function updateStep():void
     {
       transition = 0;
-      entityManager.updateStep();  
+      entityManager.updateStep();
     }
     
     private function resetEntities():void
@@ -165,7 +165,8 @@ package Src
       tileMap.unbound();
       if(gameState == STATE_GAME)
         tileMap.spawnEntities();
-
+      entityManager.update();
+      camera.jumpToTarget();
     }
 
     private function render():void

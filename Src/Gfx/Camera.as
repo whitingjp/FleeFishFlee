@@ -35,6 +35,26 @@ package Src.Gfx
                                 target.y - game.renderer.height/2);
       }
     }
+
+    public function boundTarget():void
+    {
+      var cameraBound:Rectangle = game.tileMap.cameraBound.clone();
+      cameraBound.width -= game.renderer.width;
+      cameraBound.height -= game.renderer.height;
+      if(target.x > cameraBound.right) target.x = cameraBound.right;
+      if(target.y > cameraBound.bottom) target.y = cameraBound.bottom;         
+      if(target.x < cameraBound.left) target.x = cameraBound.left;
+      if(target.y < cameraBound.top) target.y = cameraBound.top;
+    }
+
+    public function jumpToTarget():void
+    {
+      boundTarget();
+      floatPos.x = target.x;
+      floatPos.y = target.y;
+      pos.x = int(floatPos.x+0.45);
+      pos.y = int(floatPos.y+0.45);
+    }
     
     public function update():void
     {
@@ -54,13 +74,7 @@ package Src.Gfx
           if(game.input.upKey(true)) target.y -= 8;
         }
       }
-      var cameraBound:Rectangle = game.tileMap.cameraBound.clone();
-      cameraBound.width -= game.renderer.width;
-      cameraBound.height -= game.renderer.height;
-      if(target.x > cameraBound.right) target.x = cameraBound.right;
-      if(target.y > cameraBound.bottom) target.y = cameraBound.bottom;         
-      if(target.x < cameraBound.left) target.x = cameraBound.left;
-      if(target.y < cameraBound.top) target.y = cameraBound.top;
+      boundTarget();
      
       floatPos.x = ((floatPos.x*9)+target.x)/10;
       floatPos.y = ((floatPos.y*9)+target.y)/10;
