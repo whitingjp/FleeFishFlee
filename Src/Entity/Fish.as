@@ -36,7 +36,7 @@ package Src.Entity
 
     public override function update():void
     {
-      if(game.input.anyKey())
+      if(deadTimer == 0 && game.input.anyKey())
       {
         var dir:int = getDir();
         if(dir != -1 && testDir(physical.pos, dir))
