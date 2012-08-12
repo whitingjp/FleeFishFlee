@@ -26,7 +26,11 @@ package Src.Tiles
       this.tileMap = tileMap;
       
       game = tileMap.game;
-      selected = new Tile();            
+      selected = new Tile();
+      selected.t = Tile.T_NONE;
+      selected.xFrame = 0;
+      selected.yFrame = 0;
+
       pallete = new TileMap(game); 
       pallete.reset(20, 20); // These 20's are just guesses
       var y:int=0;
@@ -151,7 +155,7 @@ package Src.Tiles
         if(inPallete) selected = pallete.getTileAtPos(mousePos);
         else selected = tileMap.getTileAtPos(mousePos);
       }
-      if(game.input.keyPressedDictionary[Input.KEY_SHIFT])
+      if(game.input.keyPressedDictionary[Input.KEY_T])
         autotiling = !autotiling;
       if(autotiling && !inPallete)
       {
@@ -202,12 +206,13 @@ package Src.Tiles
         pallete.render();
       }
 
-      var spr:String = tileMap.sprites[selected.t];
-      game.renderer.drawSprite(spr, 0, game.renderer.height-TileMap.tileHeight,
-                               selected.xFrame, selected.yFrame);
       var rect:Rectangle = new Rectangle(
         0, game.renderer.height-TileMap.tileHeight,
         TileMap.tileWidth, TileMap.tileHeight);
+      game.renderer.drawRect(rect, 0x629cca);
+      var spr:String = tileMap.sprites[selected.t];      
+      game.renderer.drawSprite(spr, 0, game.renderer.height-TileMap.tileHeight,
+                               selected.xFrame, selected.yFrame);
       game.renderer.drawHollowRect(rect, 0xf09bf7);
     }
     

@@ -54,7 +54,7 @@ package Src.Entity
         clockwise = false;
         return (dir+2)%4;
       }
-      return -1;
+      return dir;
     }
 
     public override function updateStep():void

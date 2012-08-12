@@ -20,9 +20,9 @@ package Src.Tiles
     
     public function Tile()
     {
-      t = T_NONE;
-      xFrame = 0;
-      yFrame = 0;
+      t = T_WALL;
+      xFrame = 1;
+      yFrame = 1;
       dir = 0;
       precedence = -1;
     }
