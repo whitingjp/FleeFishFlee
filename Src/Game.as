@@ -51,22 +51,24 @@ package Src
 
     public var currentLevel:int = -1;
 
-    [Embed(source="../level/Fish1.lev", mimeType="application/octet-stream")]
+    [Embed(source="../level/warmup.lev", mimeType="application/octet-stream")]
     public static const Level1Class: Class;
-    [Embed(source="../level/Fish2.lev", mimeType="application/octet-stream")]
+    [Embed(source="../level/puffed_up.lev", mimeType="application/octet-stream")]
     public static const Level2Class: Class;
-    [Embed(source="../level/Fish3.lev", mimeType="application/octet-stream")]
+    [Embed(source="../level/sponge_square.lev", mimeType="application/octet-stream")]
     public static const Level3Class: Class;
-    [Embed(source="../level/Fish4.lev", mimeType="application/octet-stream")]
+    [Embed(source="../level/octo_sponge.lev", mimeType="application/octet-stream")]
     public static const Level4Class: Class;
-    [Embed(source="../level/Fish5.lev", mimeType="application/octet-stream")]
+    [Embed(source="../level/seaweed_intro.lev", mimeType="application/octet-stream")]
     public static const Level5Class: Class;
-    [Embed(source="../level/Fish6.lev", mimeType="application/octet-stream")]
+    [Embed(source="../level/seaweed_evade.lev", mimeType="application/octet-stream")]
     public static const Level6Class: Class;
-    [Embed(source="../level/Fish7.lev", mimeType="application/octet-stream")]
+    [Embed(source="../level/octo_slip.lev", mimeType="application/octet-stream")]
     public static const Level7Class: Class;
-    [Embed(source="../level/Fish8.lev", mimeType="application/octet-stream")]
+    [Embed(source="../level/concise.lev", mimeType="application/octet-stream")]
     public static const Level8Class: Class;
+    [Embed(source="../level/starfishvsoctopus.lev", mimeType="application/octet-stream")]
+    public static const Level9Class: Class;
 
 
     public function Game()
@@ -205,11 +207,13 @@ package Src
       {
         case 0: embed = new Level1Class as ByteArray; break;
         case 1: embed = new Level2Class as ByteArray; break;
-        case 2: embed = new Level4Class as ByteArray; break;
-        case 3: embed = new Level3Class as ByteArray; break;
-        case 4: embed = new Level8Class as ByteArray; break;
-        case 5: embed = new Level7Class as ByteArray; break;
-        case 6: embed = new Level6Class as ByteArray; break;
+        case 2: embed = new Level3Class as ByteArray; break;
+        case 3: embed = new Level4Class as ByteArray; break;
+        case 4: embed = new Level5Class as ByteArray; break;
+        case 5: embed = new Level6Class as ByteArray; break;
+        case 6: embed = new Level7Class as ByteArray; break;
+        case 7: embed = new Level8Class as ByteArray; break;
+        case 8: embed = new Level9Class as ByteArray; break;
         default: changeState(STATE_POST); return;
       }      
       tileMap.unpack(embed); 

@@ -48,10 +48,9 @@ package Src.Entity
       return offset;
     }
 
-    public function testDir(pos:Point, d:int):Boolean
+    public function testOffset(pos:Point, offset:Point):Boolean
     {
       var newPoint:Point = pos.clone();
-      var offset:Point = offsetFromDir(d);
       newPoint.x += offset.x;
       newPoint.y += offset.y;
       var tile:Tile = game.tileMap.getTile(newPoint.x, newPoint.y);
@@ -61,6 +60,12 @@ package Src.Entity
       if(entity && !(entity is Fish))
         return false;
       return true;
+    }
+
+    public function testDir(pos:Point, d:int):Boolean
+    {      
+      var offset:Point = offsetFromDir(d);
+      return testOffset(pos, offset);
     }
   }
 }
